@@ -44,7 +44,7 @@ Product.init(
       allowNull: false,
       //reference category model id
       references: {
-        model: Category,
+        model: 'category',
         key: 'id'
       }
     }
