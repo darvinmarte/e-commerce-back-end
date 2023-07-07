@@ -18,18 +18,41 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  Tag.findOne({
+    where: {
+      id: req.params.id
+    },
+  // be sure to include its associated Products
+    include: [Product]
+  }).then((catergory_data) => res.json(catergory_data))
+  .catch((err) => res.status(500).json(err))
 });
 
 router.post('/', (req, res) => {
   // create a new tag
+  Tag.create(req.body)
+  .then((tags) => res.status(200).json(tags))
+  .catch((err) => res.status(500).json(err))
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(req.body, {
+    where: {
+      id: req.params.id,
+    }
+  })
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
+  Tag.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then((tags) => res.status(200).json(tags))
+  .catch((err) => res.status(500).json(err))
 });
 
 module.exports = router;
